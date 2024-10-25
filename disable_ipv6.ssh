@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Append settings to /etc/sysctl.conf
+echo "net.ipv6.conf.all.disable_ipv6=1" >> /etc/sysctl.conf
+echo "net.ipv6.conf.default.disable_ipv6=1" >> /etc/sysctl.conf
+echo "net.ipv6.conf.lo.disable_ipv6=1" >> /etc/sysctl.conf
+
+# Create the /etc/rc.local file
+touch /etc/rc.local
+echo "#!/bin/bash" >> /etc/rc.local
+echo "/etc/sysctl.d" >> /etc/rc.local
+echo "/etc/init.d/procps restart" >> /etc/rc.local
+echo "exit 0" >> /etc/rc.local
+
+# Make the script executable
+chmod 755 /etc/rc.local
+
+# Reboot the system
+reboot
